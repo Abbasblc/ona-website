@@ -1,0 +1,13 @@
+[theme]
+base = "light"
+primaryColor = "#0E6A6F"
+backgroundColor = "#FAF5EC"
+secondaryBackgroundColor = "#F1E6D4"
+textColor = "#1E2B2A"
+
+[client]
+toolbarMode = "minimal"
+showSidebarNavigation = false
+
+[server]
+maxMessageSize = 200
