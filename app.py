@@ -86,11 +86,14 @@ if not st.session_state.ok:
         )
         submitted = st.form_submit_button("Open the website / فتح الموقع")
     if submitted:
-        if hmac.compare_digest(entered.strip(), code):
+        # Accept Arabic-Indic / Persian digits, and compare as bytes (non-ASCII input must not crash)
+        digits = str.maketrans("٠١٢٣٤٥٦٧٨٩۰۱۲۳۴۵۶۷۸۹", "01234567890123456789")
+        typed = entered.strip().translate(digits)
+        if hmac.compare_digest(typed.encode("utf-8"), code.strip().encode("utf-8")):
             st.session_state.ok = True
             st.rerun()
         else:
-            st.error("Incorrect code. Please try again. / الرمز غير صحيح، حاول مرة أخرى.")
+            st.error("Incorrect code. Check that your keyboard is set to English and try again. / الرمز غير صحيح، تأكد أن لوحة المفاتيح بالإنجليزية وحاول مرة أخرى.")
     st.markdown(
         '<div class="foot">© 2026 Omani Nursing Association · Powered by Knowledge Horizon</div>',
         unsafe_allow_html=True,
