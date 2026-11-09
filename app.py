@@ -29,7 +29,8 @@ def access_code() -> str:
 
 
 @st.cache_data(show_spinner=False)
-def load_site() -> str:
+def load_site(version: float) -> str:
+    # `version` is the file's modification time, so a new index.html is picked up after each update
     return SITE.read_text(encoding="utf-8")
 
 
@@ -112,4 +113,4 @@ iframe {width:100% !important; height:100vh !important; border:0 !important; dis
 """,
     unsafe_allow_html=True,
 )
-components.html(load_site(), height=900, scrolling=True)
+components.html(load_site(SITE.stat().st_mtime), height=900, scrolling=True)
